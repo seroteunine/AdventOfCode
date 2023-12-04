@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 lines = open('04.txt').read().split('\n')
 # lines = """Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
 # Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
@@ -20,16 +22,16 @@ for line in lines:
 print(total)
 
 #P2
-copies = {}
+copies = defaultdict(int)
 
 for i, line in enumerate(lines):
-    copies[i] = copies.get(i, 1)
+    copies[i] += 1
     _, numbers = line.split(':')
     win, own = numbers.split(' | ')
     win = [int(num) for num in win.split()]
     own = [int(num) for num in own.split()]
     score = sum(num in own for num in win)
     for ii in range(score):
-        copies[i + ii + 1] = copies.get(i + ii + 1, 1) + copies[i]
+        copies[i + ii + 1] += copies[i]
 
 print(sum(copies.values()))
