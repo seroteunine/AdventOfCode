@@ -1,4 +1,4 @@
-import collections
+from collections import Counter
 
 lines = """32T3K 765
 T55J5 684
@@ -12,24 +12,20 @@ lines = open('07.txt').read().split('\n')
 values = {'2':2, '3': 3, '4':4, '5':5, '6':6, '7': 7, '8': 8, '9': 9, 'T':10, 'J':11, 'Q':12, 'K':13, 'A':14}
 
 def getSetValue(hand):
-    diff = len(set(hand))
-    match diff:
-        case 1: #Five of a kind
-            return 6 
-        case 2: #Four of a kind or full house
-            for ch in hand:
-                if hand.count(ch) == 4:
-                    return 5
-            return 4
-        case 3: #Three of a kind or two pair
-            for ch in hand:
-                if hand.count(ch) == 3:
-                    return 3
-            return 2
-        case 4: #One pair
-            return 1
-        case 5: #High card
-            return 0
+    c = sorted(Counter(hand).values())
+    if c == [5]:
+        return 6
+    if c == [1,4]:
+        return 5
+    if c == [2, 3]:
+        return 4
+    if c == [1,1,3]:
+        return 3
+    if c == [1,2,2]:
+        return 2
+    if c == [1,1,1,2]:
+        return 1
+    return 0
 
 def isOrdered(l1, l2):
     h1, h2 = l1.split()[0], l2.split()[0]
@@ -58,11 +54,11 @@ values = {'J':1, '2':2, '3': 3, '4':4, '5':5, '6':6, '7': 7, '8': 8, '9': 9, 'T'
         
 def tryJoker(hand):
     if hand.count('J') == 5:
-        return 'AAAA'
-    mostcommon = collections.Counter(hand).most_common(1)[0][0]
+        return 'AAAAA'
+    mostcommon = Counter(hand).most_common(1)[0][0]
     if mostcommon != 'J':
         return hand.replace('J', mostcommon) 
-    return hand.replace('J', collections.Counter(hand).most_common(2)[1][0])
+    return hand.replace('J', Counter(hand).most_common(2)[1][0])
 
 def isOrdered(l1, l2):
     h1, h2 = l1.split()[0], l2.split()[0]
