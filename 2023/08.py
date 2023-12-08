@@ -1,5 +1,4 @@
 from collections import defaultdict
-from itertools import product
 from math import lcm
 
 lines = """LLR
