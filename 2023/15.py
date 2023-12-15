@@ -6,33 +6,27 @@ inp = open('15.txt').read()
 def getHash(string):
     curr = 0
     for ch in string:
-        curr += ord(ch)
-        curr *= 17
-        curr = curr % 256
+        curr = (curr + ord(ch)) * 17 % 256
     return curr
 
-t1 = 0
-for string in inp.split(','):
-    t1 += getHash(string)
+t1 = sum(getHash(s) for s in inp.split(','))
+print(t1)
 
 #Part 2
-boxes = defaultdict(defaultdict)
+boxes = defaultdict(dict)
 
 for string in inp.split(','):
-    if string[-1] == '-':
-        lbl, foc = string[:-1], None
+    if string.endswith('-'):
+        lbl = string[:-1]
+        hash = getHash(lbl)
+        boxes[hash].pop(lbl, None)
     else:
         lbl, foc = string.split('=')
-    hash = getHash(lbl)
-    if foc:
-        boxes[hash][lbl] = foc
-    elif lbl in boxes[hash]:
-        del boxes[hash][lbl]
+        hash = getHash(lbl)
+        boxes[hash][lbl] = int(foc)
 
 t2 = 0
 for i, box in boxes.items():
-    for j, lens in enumerate(box.values()):
-        t2 += (i+1) * (j+1) * int(lens)
+    t2 += sum((i+1) * (j+1) * lens for j, lens in enumerate(box.values()))
 
-print(t1)
 print(t2)
