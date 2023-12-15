@@ -1,15 +1,38 @@
+from collections import OrderedDict, defaultdict
+
 inp = open('15.txt').read()
 
 #Part 1
-t = 0
-for string in inp.split(','):
+def getHash(string):
     curr = 0
     for ch in string:
         curr += ord(ch)
         curr *= 17
         curr = curr % 256
-    t += curr
+    return curr
 
-print(t)
+t1 = 0
+for string in inp.split(','):
+    t1 += getHash(string)
 
 #Part 2
+boxes = defaultdict(OrderedDict)
+
+for string in inp.split(','):
+    if string[-1] == '-':
+        lbl, foc = string[:-1], None
+    else:
+        lbl, foc = string.split('=')
+    hash = getHash(lbl)
+    if foc:
+        boxes[hash][lbl] = foc
+    elif lbl in boxes[hash]:
+        boxes[hash].pop(lbl)
+
+t2 = 0
+for i, box in boxes.items():
+    for j, lens in enumerate(box.values()):
+        t2 += (i+1) * (j+1) * int(lens)
+
+print(t1)
+print(t2)
