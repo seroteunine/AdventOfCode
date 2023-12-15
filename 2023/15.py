@@ -1,4 +1,4 @@
-from collections import OrderedDict, defaultdict
+from collections import defaultdict
 
 inp = open('15.txt').read()
 
@@ -16,7 +16,7 @@ for string in inp.split(','):
     t1 += getHash(string)
 
 #Part 2
-boxes = defaultdict(OrderedDict)
+boxes = defaultdict(defaultdict)
 
 for string in inp.split(','):
     if string[-1] == '-':
@@ -27,7 +27,7 @@ for string in inp.split(','):
     if foc:
         boxes[hash][lbl] = foc
     elif lbl in boxes[hash]:
-        boxes[hash].pop(lbl)
+        del boxes[hash][lbl]
 
 t2 = 0
 for i, box in boxes.items():
