@@ -1,5 +1,5 @@
 import re
-f = open('input.txt').read()
+f = open('input.txt').read().strip()
 
 t1 = t2 = 0
 rgx = r"(mul\(\d+\,\d+\))|(do\(\))|(don\'t\(\))"
@@ -12,7 +12,7 @@ for match in re.finditer(rgx, f):
         t1 += mltp
         t2 += mltp * enabled
     else:
-        enabled = bool(match.group(2))
+        enabled = True if match.group(2) else False
    
 print(t1)
 print(t2)

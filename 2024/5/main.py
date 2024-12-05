@@ -14,14 +14,15 @@ def check_valid(update):
                 return False
     return True
 
-t = sum([update[len(update) // 2] for update in f2 if check_valid(update)])
-print(t)
+#Part 1
+print(sum([update[len(update) // 2] for update in f2 if check_valid(update)]))
 
-# Part 2
+#Part 2
 def compare(i1, i2):
     if [i2, i1] in f1:
         return -1
-    return [i1, i2] in f1
+    if [i1, i2] in f1:
+        return 1
 
-t = sum([sorted(update, key=cmp_to_key(compare))[len(update) // 2] for update in updates_wrong])
-print(t)
+
+print(sum([sorted(update, key=cmp_to_key(compare))[len(update) // 2] for update in updates_wrong]))

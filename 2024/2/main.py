@@ -30,8 +30,5 @@ def check_sequence_part2(sequence):
             return True 
     return False
 
-t1 = sum(1 for seq in f if check_sequence_part1(seq))
-print(t1)
-
-t2 = sum(1 for seq in f if check_sequence_part2(seq))
-print(t2)
+print(sum(check_sequence_part1(seq) for seq in f))
+print(sum(check_sequence_part2(seq) for seq in f))
