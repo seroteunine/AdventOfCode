@@ -10,22 +10,7 @@ for r in range(R):
             pos = (r, c)
             break
 
-# Helper
-def printer():
-    for r in range(R):
-        print(''.join(G[r]))
-    print()
-
-# Part 1
-def get_dir(move: str):
-    if move == '^':
-        return (-1, 0)
-    if move == '>':
-        return (0, 1)
-    if move == 'v':
-        return (1, 0)
-    if move == '<':
-        return (0, -1)
+dirs = {'^': (-1, 0), '>': (0, 1), 'v': (1, 0), '<': (0, -1)}
 
 def make_step(r, c, rr, cc):
     global pos
@@ -54,9 +39,8 @@ def move_boxes(r, c, dr, dc, boxes):
     G[rr+dr*boxes][cc+dc*boxes] = 'O'
     
 def make_move(move):
-    global pos
     r, c = pos
-    dr, dc = get_dir(move)
+    dr, dc = dirs[move]
     rr, cc = r + dr, c + dc
     if G[rr][cc] == '.':
         make_step(r, c, rr, cc)
@@ -68,10 +52,6 @@ def make_move(move):
 for move in M:
     make_move(move)
 
-t = 0
-for r in range(R):
-    for c in range(C):
-        if G[r][c] == 'O':
-            t += r * 100 + c
-
+# Part 1
+t = sum(r * 100 + c for r in range(R) for c in range(C) if G[r][c] == 'O')
 print(t)
