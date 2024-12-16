@@ -18,7 +18,7 @@ def has_n_ends(pos, visited):
     valid = 0
     for dr, dc in [(-1, 0), (0, 1), (1, 0), (0, -1)]:
         rr, cc = r + dr, c + dc
-        if 0 <= rr < R and 0 <= cc < C:
+        if rr in range(R) and cc in range(C):
             if G[rr][cc] == G[r][c] + 1:
                 valid += has_n_ends((rr, cc), visited)
     return valid
